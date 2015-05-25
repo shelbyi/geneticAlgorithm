@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Date;
+import net.hft.algodat.framework.geneticalgorithm.annotations.Convergence;
+import net.hft.algodat.framework.geneticalgorithm.annotations.UpperBorder;
+import net.hft.algodat.framework.geneticalgorithm.annotations.StopCriteria;
+import net.hft.algodat.framework.geneticalgorithm.annotations.TimeBorder;
 import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
 import net.hft.algodat.framework.geneticalgorithm.entities.Job;
 import net.hft.algodat.framework.geneticalgorithm.entities.Resource;
@@ -31,11 +36,11 @@ import org.slf4j.LoggerFactory;
  * @author Jan
  */
 public final class GeneticAlgorithm implements Algorithm {
-    
+
     private final static Logger LOGGER = LoggerFactory.getLogger(GeneticAlgorithm.class);
 
     private Map<String, String> properties = new HashMap<>();
-    private int amountOfIterations;
+
     private int populationSize;
     private URL jobFilepath;
     private URL resFilepath;
@@ -46,14 +51,27 @@ public final class GeneticAlgorithm implements Algorithm {
     private Crossover crossoverMethod;
     private Replacement replacementMethod;
 
+    @StopCriteria
+    @UpperBorder(value = 5)
+    private int maxFitnessInIteration;
+
+    @StopCriteria
+    @UpperBorder(value = 40)
+    private int amountOfIterations;
+
+    @StopCriteria
+    @Convergence(sizeOfConvergence = 200)
+    private List<Individual> amountOfConvergence;
+
+    @StopCriteria
+    @TimeBorder(minutes = 5, seconds = 0)
+    private Date currentRuntime;
+
     @Override
     public void run() {
         LOGGER.info("GeneticAlgorithm is started...");
         initGA();
         validateConfiguration();
-        
-        // loopcounter for iterations of GA
-        int interationCounter = 0;
 
         // Load initial data
         File jobFile = new File(jobFilepath.toString());
@@ -86,17 +104,17 @@ public final class GeneticAlgorithm implements Algorithm {
         LOGGER.info("Population created");
 
         // GA- mainpart
-        while (interationCounter < this.amountOfIterations) {
+        while (true) {
             List<Individual> populationAfterSelection = this.selectionMethod.executeSelection(population);
             this.crossoverMethod.executeCrossover(populationAfterSelection);
             this.mutationMethod.executeMutation(populationAfterSelection);
 
             this.replacementMethod.executeReplacement(population);
-            interationCounter++;
-        }
-        
-        LOGGER.info("Finished");
 
+            this.maxFitnessInIteration = Utilities.getFittestInPopulation(population).getFitness();
+            this.amountOfConvergence = population;
+            this.amountOfIterations++;
+        }
     }
 
     private void initGA() {
@@ -114,6 +132,7 @@ public final class GeneticAlgorithm implements Algorithm {
 
         this.jobFilepath = getClass().getResource(properties.get("jobList"));
         this.resFilepath = getClass().getResource(properties.get("resourceList"));
+        this.amountOfConvergence = new ArrayList<>();
         LOGGER.info("Filebased initializsation completed...");
     }
 
@@ -121,10 +140,9 @@ public final class GeneticAlgorithm implements Algorithm {
         if (this.populationSize < 150) {
             throw new IllegalArgumentException("PopulationSize must be higher than 150!");
         }
-        if (this.amountOfIterations < 40) {
+        if (this.amountOfIterations <= 39) {
             throw new IllegalArgumentException("Iterations must be higher than 40!");
         }
-
         if (selectionMethod == null) {
             throw new IllegalArgumentException("SelectionMethod may not be null");
         }
