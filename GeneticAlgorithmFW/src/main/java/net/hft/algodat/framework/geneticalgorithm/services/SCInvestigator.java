@@ -49,6 +49,9 @@ public abstract class SCInvestigator {
 
                     }
                     if (maxValueBorder >= maxValueAtRuntime) {
+                        if (maxValueAtRuntime == 0) {
+                            LOGGER.warn("Fittness is after the iteration still 0. Please make sure that the fittnessfunction is correkt for the GA");
+                        }
                         LOGGER.warn("Upper border is reached: {} for Criteria: {}", maxValueAtRuntime, field.getName());
                         isReached = true;
                         break;
