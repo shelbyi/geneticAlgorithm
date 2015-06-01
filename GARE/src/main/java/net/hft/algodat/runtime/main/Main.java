@@ -6,6 +6,7 @@
 package net.hft.algodat.runtime.main;
 
 import net.hft.algodat.framework.geneticalgorithm.base.GeneticAlgorithm;
+import net.hft.alogdat.selectionmethods.TournamentSelection;
 
 /**
  *
@@ -16,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         GeneticAlgorithm geneticAlgo = new GeneticAlgorithm();
         
-        geneticAlgo.setSelectionMethod(null);
+        geneticAlgo.setSelectionMethod(new TournamentSelection());
         geneticAlgo.setCrossoverMethod(null);
         geneticAlgo.setMutationMethod(null);
         geneticAlgo.setReplacementMethod(null);

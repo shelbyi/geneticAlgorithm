@@ -127,7 +127,7 @@ public final class GeneticAlgorithm implements Algorithm {
         LOGGER.info("Population created");
 
         // GA- mainpart
-        while (!SCInvestigator.isStopCriteraReached(this)) {
+        while (true) {
             List<Individual> populationAfterSelection = this.selectionMethod.executeSelection(population);
             this.crossoverMethod.executeCrossover(populationAfterSelection);
             this.mutationMethod.executeMutation(populationAfterSelection);
@@ -138,7 +138,6 @@ public final class GeneticAlgorithm implements Algorithm {
             this.amountOfConvergence = population;
             this.amountOfIterations++;
         }
-        LOGGER.info("GA is finished");
     }
 
     private void initGA() {

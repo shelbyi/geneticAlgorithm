@@ -41,22 +41,22 @@ public abstract class SCInvestigator {
         for (Field field : GeneticAlgorithm.class.getDeclaredFields()) {
             field.setAccessible(true);
             if (field.isAnnotationPresent(StopCriteria.class)) {
-                if (field.isAnnotationPresent(UpperBorder.class)) {
-                    try {
-                        maxValueBorder = field.getAnnotation(UpperBorder.class).value();
-                        maxValueAtRuntime = (Integer) field.get(instance);
-                    } catch (IllegalArgumentException | IllegalAccessException ex) {
-
-                    }
-                    if (maxValueBorder >= maxValueAtRuntime) {
-                        if (maxValueAtRuntime == 0) {
-                            LOGGER.warn("Fittness is after the iteration still 0. Please make sure that the fittnessfunction is correkt for the GA");
-                        }
-                        LOGGER.warn("Upper border is reached: {} for Criteria: {}", maxValueAtRuntime, field.getName());
-                        isReached = true;
-                        break;
-                    }
-                }
+//                if (field.isAnnotationPresent(UpperBorder.class)) {
+//                    try {
+//                        maxValueBorder = field.getAnnotation(UpperBorder.class).value();
+//                        maxValueAtRuntime = (Integer) field.get(instance);
+//                    } catch (IllegalArgumentException | IllegalAccessException ex) {
+//
+//                    }
+//                    if (maxValueBorder >= maxValueAtRuntime) {
+//                        if (maxValueAtRuntime == 0) {
+//                            LOGGER.warn("Fittness is after the iteration still 0. Please make sure that the fittnessfunction is correkt for the GA");
+//                        }
+//                        LOGGER.warn("Upper border is reached: {} for Criteria: {}", maxValueAtRuntime, field.getName());
+//                        isReached = true;
+//                        break;
+//                    }
+//                }
 
                 if (field.isAnnotationPresent(Convergence.class)) {
                     maxValueBorder = field.getAnnotation(Convergence.class).sizeOfConvergence();
