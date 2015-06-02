@@ -30,7 +30,6 @@ public class TournamentSelectionTest {
             int random = TournamentSelection.getRandomInBetween(a);
             if ((random >= 0 || random <= a.size()) && random != a.size()) {
                 a.get(random);
-                System.out.println(random);
             } else {
                 isValid = false;
             }
