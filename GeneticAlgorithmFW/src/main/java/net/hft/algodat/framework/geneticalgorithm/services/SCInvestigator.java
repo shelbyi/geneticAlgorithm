@@ -27,37 +27,37 @@ import org.slf4j.LoggerFactory;
  * @author Jan
  */
 public abstract class SCInvestigator {
-
+    
     private final static Logger LOGGER = LoggerFactory.getLogger(SCInvestigator.class);
-
+    
     public static boolean isStopCriteraReached(GeneticAlgorithm instance) {
-
+        
         boolean isReached = true;
-
+        
         int maxValueBorder = 0;
         int maxValueAtRuntime = 0;
         List<Individual> convList = new ArrayList<>();
-
+        
         for (Field field : GeneticAlgorithm.class.getDeclaredFields()) {
             field.setAccessible(true);
             if (field.isAnnotationPresent(StopCriteria.class)) {
-//                if (field.isAnnotationPresent(UpperBorder.class)) {
-//                    try {
-//                        maxValueBorder = field.getAnnotation(UpperBorder.class).value();
-//                        maxValueAtRuntime = (Integer) field.get(instance);
-//                    } catch (IllegalArgumentException | IllegalAccessException ex) {
-//
-//                    }
-//                    if (maxValueBorder >= maxValueAtRuntime) {
-//                        if (maxValueAtRuntime == 0) {
-//                            LOGGER.warn("Fittness is after the iteration still 0. Please make sure that the fittnessfunction is correkt for the GA");
-//                        }
-//                        LOGGER.warn("Upper border is reached: {} for Criteria: {}", maxValueAtRuntime, field.getName());
-//                        isReached = true;
-//                        break;
-//                    }
-//                }
-
+                if (field.isAnnotationPresent(UpperBorder.class)) {
+                    try {
+                        maxValueBorder = field.getAnnotation(UpperBorder.class).value();
+                        maxValueAtRuntime = (Integer) field.get(instance);
+                    } catch (IllegalArgumentException | IllegalAccessException ex) {
+                        LOGGER.error(ex.toString());
+                    }
+                    if (maxValueAtRuntime >= maxValueBorder) {
+                        if (maxValueAtRuntime == 0) {
+                            LOGGER.warn("Fittness is after the iteration still 0. Please make sure that the fittnessfunction is correkt for the GA");
+                        }
+                        LOGGER.warn("Upper border is reached: {} for Criteria: {}. Bordervalue is {}", maxValueAtRuntime, field.getName(), maxValueBorder);
+                        isReached = true;
+                        break;
+                    }
+                }
+                
                 if (field.isAnnotationPresent(Convergence.class)) {
                     maxValueBorder = field.getAnnotation(Convergence.class).sizeOfConvergence();
                     try {
@@ -65,7 +65,7 @@ public abstract class SCInvestigator {
                     } catch (IllegalArgumentException | IllegalAccessException ex) {
                         java.util.logging.Logger.getLogger(SCInvestigator.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    
                     List<Individual> smallList = convList.subList(convList.size() - maxValueBorder, convList.size());
                     // Calculate avg
                     int avg = 0;
@@ -76,20 +76,20 @@ public abstract class SCInvestigator {
 
                     // check convergence
                     int convCounter = 0;
-
+                    
                     for (Individual i : smallList) {
                         if (i.getFitness() <= avg - 1 || i.getFitness() >= avg + 1) {
                             convCounter++;
                         }
                     }
-
+                    
                     if (convCounter >= smallList.size() * 0.75) {
                         LOGGER.warn("The last {} values seem to be convergent!", maxValueBorder);
                         isReached = true;
                         break;
                     }
                 }
-
+                
                 if (field.isAnnotationPresent(TimeBorder.class)) {
                     // Getting values
                     int min = field.getAnnotation(TimeBorder.class).minutes();
@@ -103,7 +103,7 @@ public abstract class SCInvestigator {
                     } catch (IllegalArgumentException | IllegalAccessException ex) {
                         LOGGER.error(ex.toString());
                     }
-
+                    
                     if (dateField == null) {
                         dateField = new Date();
                     } else {
@@ -118,27 +118,27 @@ public abstract class SCInvestigator {
                         cal.setTime(d);
                         cal.add(Calendar.MINUTE, min);
                         cal.add(Calendar.SECOND, sec);
-
+                        
                         if (dateField.after(cal.getTime())) {
                             LOGGER.warn("Time- border is reached");
                             isReached = true;
                             break;
                         }
-
+                        
                     }
-
+                    
                 }
             }
-
+            
         }
-
+        
         return isReached;
     }
-
+    
     private static void validateTimeValues(int min, int sec) {
         if (min < 0 || sec < 0) {
             throw new IllegalArgumentException("Values for Minute or Second are invalid");
         }
     }
-
+    
 }
