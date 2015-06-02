@@ -7,7 +7,6 @@ package net.hft.algodat.framework.geneticalgorithm.base;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
@@ -57,11 +56,11 @@ public final class GeneticAlgorithm implements Algorithm {
     private TypeOfRuntime type;
 
     @StopCriteria
-    @UpperBorder(value = 5)
+    @UpperBorder(value = 150)
     private int maxFitnessInIteration;
 
     @StopCriteria
-    @UpperBorder(value = 40)
+    @UpperBorder(value = 50)
     private int amountOfIterations;
 
     @StopCriteria
@@ -127,17 +126,16 @@ public final class GeneticAlgorithm implements Algorithm {
         LOGGER.info("Population created");
 
         // GA- mainpart
-        while (true) {
+        do {
             List<Individual> populationAfterSelection = this.selectionMethod.executeSelection(population);
             this.crossoverMethod.executeCrossover(populationAfterSelection);
             this.mutationMethod.executeMutation(populationAfterSelection);
-
             this.replacementMethod.executeReplacement(population);
-
+            
             this.maxFitnessInIteration = Utilities.getFittestInPopulation(population).getFitness();
             this.amountOfConvergence = population;
             this.amountOfIterations++;
-        }
+        } while (!SCInvestigator.isStopCriteraReached(this));
     }
 
     private void initGA() {
