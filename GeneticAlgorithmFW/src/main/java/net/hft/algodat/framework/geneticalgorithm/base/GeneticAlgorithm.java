@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import net.hft.algodat.framework.geneticalgorithm.annotations.Convergence;
+import net.hft.algodat.framework.geneticalgorithm.annotations.PartOfAlgorithm;
 import net.hft.algodat.framework.geneticalgorithm.annotations.UpperBorder;
 import net.hft.algodat.framework.geneticalgorithm.annotations.StopCriteria;
 import net.hft.algodat.framework.geneticalgorithm.annotations.TimeBorder;
@@ -49,10 +50,15 @@ public final class GeneticAlgorithm implements Algorithm {
     private URL resFilepath;
 
     // Parts
+    @PartOfAlgorithm
     private Selection selectionMethod;
+    @PartOfAlgorithm
     private Mutation mutationMethod;
+    @PartOfAlgorithm
     private Crossover crossoverMethod;
+    @PartOfAlgorithm
     private Replacement replacementMethod;
+
     private TypeOfRuntime type;
 
     @StopCriteria
@@ -84,7 +90,7 @@ public final class GeneticAlgorithm implements Algorithm {
             }
         } else {
             LOGGER.error("=== Runtimetype of the Framework must be set. Program stopped ===");
-            System.exit(1);
+            throw new RuntimeException();
         }
 
         // Load initial data
@@ -131,7 +137,7 @@ public final class GeneticAlgorithm implements Algorithm {
             this.crossoverMethod.executeCrossover(populationAfterSelection);
             this.mutationMethod.executeMutation(populationAfterSelection);
             this.replacementMethod.executeReplacement(population);
-            
+
             this.maxFitnessInIteration = Utilities.getFittestInPopulation(population).getFitness();
             this.amountOfConvergence = population;
             this.amountOfIterations++;
@@ -162,24 +168,7 @@ public final class GeneticAlgorithm implements Algorithm {
     }
 
     private void validateConfiguration() {
-        if (this.populationSize < 150) {
-            throw new IllegalArgumentException("PopulationSize must be higher than 150!");
-        }
-        if (this.amountOfIterations <= 39) {
-            throw new IllegalArgumentException("Iterations must be higher than 40!");
-        }
-        if (selectionMethod == null) {
-            throw new IllegalArgumentException("SelectionMethod may not be null");
-        }
-        if (crossoverMethod == null) {
-            throw new IllegalArgumentException("CrossoverMethod may not be null");
-        }
-        if (mutationMethod == null) {
-            throw new IllegalArgumentException("MutationMethod may not be null");
-        }
-        if (replacementMethod == null) {
-            throw new IllegalArgumentException("ReplacementMethod may not be null");
-        }
+        SCInvestigator.validateConfiguration(this);
         LOGGER.info("Validation completed...");
     }
 
