@@ -5,6 +5,7 @@
  */
 package net.hft.algodat.runtime.main;
 
+import net.hft.algodat.crossovermethods.CrossoverFunction;
 import net.hft.algodat.framework.geneticalgorithm.base.GeneticAlgorithm;
 import net.hft.alogdat.selectionmethods.TournamentSelection;
 
@@ -18,7 +19,7 @@ public class Main {
         GeneticAlgorithm geneticAlgo = new GeneticAlgorithm();
         
         geneticAlgo.setSelectionMethod(new TournamentSelection());
-        geneticAlgo.setCrossoverMethod(null);
+        geneticAlgo.setCrossoverMethod(new CrossoverFunction());
         geneticAlgo.setMutationMethod(null);
         geneticAlgo.setReplacementMethod(null);
         
