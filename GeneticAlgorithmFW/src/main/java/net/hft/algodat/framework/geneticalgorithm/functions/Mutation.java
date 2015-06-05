@@ -14,5 +14,5 @@ import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
  */
 public interface Mutation {
     
-    public void executeMutation(List<Individual> population);
+    public void executeMutation(List<Individual> population, float prob, int amountOfChnages);
 }
