@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.hft.alogdat.test;
+package net.hft.algodat.test;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.hft.alogdat.selectionmethods.TournamentSelection;
+
+import net.hft.algodat.selectionmethods.TournamentSelection;
+
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
