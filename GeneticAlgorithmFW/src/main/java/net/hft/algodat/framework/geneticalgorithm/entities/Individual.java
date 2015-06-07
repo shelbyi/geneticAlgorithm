@@ -17,6 +17,8 @@ public class Individual {
 
     int[] jobListe;//genotype
     int[] schedule;//phänotype
+    
+    private List<Job> jobs;
 
     //example of the data structure:
     //jobListe: 1 3 6 2 4 5 7  ; that means, jobs should schedule by the order 1,3,...,7; the Jobs 1 and 7 are the dummy jobs
@@ -58,8 +60,9 @@ public class Individual {
     }
 
     public void initializeJobList(List<Job> jobs) {
-
-        ArrayList<Job> eligibleJobs = new ArrayList<>();
+    	this.jobs = jobs;
+    	
+    	List<Job> eligibleJobs = new ArrayList<>();
         jobListe = new int[jobs.size()];
 
         // 1. Job to jobListe
@@ -150,6 +153,14 @@ public class Individual {
     public int getFitness() {
         //the start time of last job (= dummy job) is the makespan of the project and thus the fitness of the individual
         return schedule[schedule.length - 1];
+    }
+    
+    public int[] getJobListe() {
+    	return this.jobListe;
+    }
+    
+    public List<Job> getJobs() {
+    	return this.jobs;
     }
 
     public int earliestPossibleStarttime(Job j, List<Job> jobs) {
