@@ -6,7 +6,10 @@
 package net.hft.algodat.runtime.main;
 
 import net.hft.algodat.framework.geneticalgorithm.base.GeneticAlgorithm;
+<<<<<<< HEAD
 import net.hft.algodat.selectionmethods.MutationSwap;
+=======
+>>>>>>> MCHOKOEVA:
 import net.hft.algodat.selectionmethods.TournamentSelection;
 
 /**

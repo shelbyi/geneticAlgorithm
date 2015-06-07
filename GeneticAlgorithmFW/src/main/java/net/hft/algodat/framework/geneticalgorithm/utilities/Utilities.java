@@ -18,7 +18,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+
 import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
+
 import org.slf4j.LoggerFactory;
 
 /**
@@ -71,6 +73,15 @@ public abstract class Utilities {
             }
         }
         return best;
+    }
+    
+    public static int getRandomInBetween(List<Individual> population) {
+        int min = 0;
+        return getRandomIntegerInBetween(min, population.size() - 1);
+    }
+
+    private static int getRandomIntegerInBetween(int min, int max) {
+        return min + (int) (Math.random() * ((max - min) + 1));
     }
 
 }
