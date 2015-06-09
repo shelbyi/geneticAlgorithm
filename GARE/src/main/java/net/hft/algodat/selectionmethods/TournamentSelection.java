@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
 import net.hft.algodat.framework.geneticalgorithm.functions.Selection;
-import net.hft.algodat.framework.geneticalgorithm.utilities.Utilities;
+import net.hft.algodat.utilities.Utilities;
 
 /**
  * Tournament Selection with tournament size 2,chooses best parents by comparing

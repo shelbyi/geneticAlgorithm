@@ -10,8 +10,7 @@ import java.util.List;
 
 import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
 import net.hft.algodat.framework.geneticalgorithm.functions.Replacement;
-import net.hft.algodat.framework.geneticalgorithm.utilities.Utilities;
-import net.hft.algodat.selectionmethods.TournamentSelection;
+import net.hft.algodat.utilities.Utilities;
 
 
 /**
