@@ -6,6 +6,7 @@
 package net.hft.algodat.runtime.main;
 
 import net.hft.algodat.framework.geneticalgorithm.base.GeneticAlgorithm;
+import net.hft.algodat.replacementmethods.ReplacementStrategy;
 import net.hft.algodat.selectionmethods.MutationSwap;
 import net.hft.algodat.selectionmethods.TournamentSelection;
 
@@ -21,7 +22,7 @@ public class Main {
         geneticAlgo.setSelectionMethod(new TournamentSelection());
         geneticAlgo.setCrossoverMethod(null);
         geneticAlgo.setMutationMethod(new MutationSwap());
-        geneticAlgo.setReplacementMethod(null);
+        geneticAlgo.setReplacementMethod(new ReplacementStrategy());
         
         geneticAlgo.run();
     }
