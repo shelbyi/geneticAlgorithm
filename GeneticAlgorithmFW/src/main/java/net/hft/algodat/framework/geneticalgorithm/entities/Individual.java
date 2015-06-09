@@ -30,10 +30,6 @@ public class Individual {
             jobListe[i] = elter.jobListe[i];
         }
     }
-    
-    public int[] getJobListe(){
-        return jobListe;
-    }
 
     public void mutate(List<Job> jobs) {
         //make one feasible swap move on the jobListe
