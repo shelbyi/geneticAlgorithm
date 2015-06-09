@@ -18,7 +18,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+
 import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
+
 import org.slf4j.LoggerFactory;
 
 /**
@@ -72,5 +74,5 @@ public abstract class Utilities {
         }
         return best;
     }
-
+    
 }

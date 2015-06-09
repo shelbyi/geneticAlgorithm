@@ -5,14 +5,18 @@
  */
 package net.hft.algodat.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import net.hft.algodat.selectionmethods.TournamentSelection;
+import net.hft.algodat.utilities.Utilities;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  *
@@ -30,7 +34,7 @@ public class TournamentSelectionTest {
         a.add("");
         for (int i = 0; i < 100000; i++) {
             // Important: we have to ask for size()-1 if we are requesting the random indices
-            int random = TournamentSelection.getRandomInBetween(a);
+            int random = Utilities.getRandomInBetween(a);
             if ((random >= 0 || random <= a.size()) && random != a.size()) {
                 a.get(random);
             } else {
