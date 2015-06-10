@@ -64,7 +64,7 @@ public abstract class Utilities {
     public static Individual getFittestInPopulation(List<Individual> population) {
         Individual best = population.get(0);
         for (Individual i : population) {
-            if (i.getFitness() >= best.getFitness()) {
+            if (i.getFitness() < best.getFitness()) {
                 best = i;
             }
         }

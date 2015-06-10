@@ -73,15 +73,15 @@ public final class GeneticAlgorithm implements Algorithm {
     private int maxFitnessInIteration;
 
     @StopCriteria
-    @UpperBorder(value = 50)
+    @UpperBorder(value = 50000)
     private int amountOfIterations;
 
     @StopCriteria
-    @Convergence(sizeOfConvergence = 200)
+    @Convergence(sizeOfConvergence = 1)
     private List<Individual> amountOfConvergence;
 
     @StopCriteria
-    @TimeBorder(minutes = 0, seconds = 45)
+    @TimeBorder(minutes = 10, seconds = 00)
     private Date currentRuntime;
 
     @Override
@@ -139,6 +139,7 @@ public final class GeneticAlgorithm implements Algorithm {
         LOGGER.info("Population created");
 
         // GA- mainpart
+        int maxFittestOverall = Integer.MAX_VALUE;
         boolean startUp = true;
         do {
             if (startUp) {
@@ -150,6 +151,10 @@ public final class GeneticAlgorithm implements Algorithm {
             this.crossoverMethod.executeCrossover(populationAfterSelection);
             this.mutationMethod.executeMutation(populationAfterSelection, probGA, amountMutationsGA);
             this.replacementMethod.executeReplacement(population);
+            
+            for (Individual i : population) {
+                i.decodeJobList(jobs, res);
+            }
 /*
             if (this.crossoverMethod != null)
                 this.crossoverMethod.executeCrossover(populationAfterSelection);
@@ -159,6 +164,12 @@ public final class GeneticAlgorithm implements Algorithm {
                 this.replacementMethod.executeReplacement(population);
 */
             this.maxFitnessInIteration = Utilities.getFittestInPopulation(population).getFitness();
+            if(this.maxFitnessInIteration < maxFittestOverall) {
+            	maxFittestOverall = this.maxFitnessInIteration;
+            }
+            LOGGER.info(this.amountOfIterations + " new fitness iteration (=makespan): " + this.maxFitnessInIteration);
+            LOGGER.info(this.amountOfIterations + " new fitness overall   (=makespan): " + maxFittestOverall);
+            LOGGER.info("------------------------------------------------------");
             this.amountOfConvergence = population;
             this.amountOfIterations++;
         } while (!SCInvestigator.isStopCriteraReached(this));
@@ -176,8 +187,8 @@ public final class GeneticAlgorithm implements Algorithm {
         this.populationSize = Integer.decode(properties.get("populationSize"));
 
         try {
-            this.amountOfIterations = this.getClass().getDeclaredField("amountOfIterations").getAnnotation(UpperBorder.class).value();
-        } catch (NoSuchFieldException | SecurityException ex) {
+            this.amountOfIterations = 0;//this.getClass().getDeclaredField("amountOfIterations").getAnnotation(UpperBorder.class).value();
+        } catch (SecurityException ex) {
             LOGGER.error(ex.toString());
         }
         this.jobFilepath = getClass().getResource(properties.get("jobList"));

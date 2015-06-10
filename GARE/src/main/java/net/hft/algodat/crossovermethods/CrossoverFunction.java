@@ -25,9 +25,9 @@ public class CrossoverFunction implements Crossover{
     public void executeCrossover(List<Individual> population)
     {
         int probability = 100; // in %
-        LOGGER.info("Crossover permutation is started." 
+        /*LOGGER.info("Crossover permutation is started." 
                 + " Population size: " + population.size()
-        + ". Probability: " + probability + "%");
+        + ". Probability: " + probability + "%");*/
         
         int indexOfIndividual = 0;
         while(indexOfIndividual < population.size()-1)
@@ -36,7 +36,7 @@ public class CrossoverFunction implements Crossover{
             
             indexOfIndividual += 2; // make use of probability here
         } 
-        LOGGER.info("Crossover permutation is finished");        
+        //LOGGER.info("Crossover permutation is finished");        
     }   
     
     //one point crossover operation
