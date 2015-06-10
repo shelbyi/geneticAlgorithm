@@ -15,7 +15,7 @@ import net.hft.algodat.framework.geneticalgorithm.services.JobService;
  */
 public class Individual {
 
-    int[] jobListe;//genotype
+    public int[] jobListe;//genotype
     int[] schedule;//phänotype
     
     private List<Job> jobs;

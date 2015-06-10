@@ -146,10 +146,18 @@ public final class GeneticAlgorithm implements Algorithm {
                 startUp = false;
             }
             List<Individual> populationAfterSelection = this.selectionMethod.executeSelection(population);
+
             this.crossoverMethod.executeCrossover(populationAfterSelection);
             this.mutationMethod.executeMutation(populationAfterSelection, probGA, amountMutationsGA);
             this.replacementMethod.executeReplacement(population);
-
+/*
+            if (this.crossoverMethod != null)
+                this.crossoverMethod.executeCrossover(populationAfterSelection);
+            if (this.mutationMethod != null)
+                this.mutationMethod.executeMutation(populationAfterSelection);
+            if (this.replacementMethod != null)
+                this.replacementMethod.executeReplacement(population);
+*/
             this.maxFitnessInIteration = Utilities.getFittestInPopulation(population).getFitness();
             this.amountOfConvergence = population;
             this.amountOfIterations++;
