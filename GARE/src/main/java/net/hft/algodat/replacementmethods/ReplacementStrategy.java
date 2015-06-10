@@ -8,6 +8,7 @@ package net.hft.algodat.replacementmethods;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.hft.algodat.crossovermethods.CrossoverFunction;
 import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
 import net.hft.algodat.framework.geneticalgorithm.functions.Replacement;
 import net.hft.algodat.utilities.Utilities;
@@ -44,9 +45,8 @@ public class ReplacementStrategy implements Replacement {
         /*
          * 2. Create children using crossover and mutation
          */
-        //TODO: uncomment this lines, once the Crossover is implemented
-//        CrossoverFunction crossOverFkt = new CrossoverFunction();
-//        crossOverFkt.executeCrossover(parentsList);
+        CrossoverFunction crossOverFkt = new CrossoverFunction();
+        crossOverFkt.executeCrossover(parentsList);
         
         /*
          * 3. Calculate fitness of offspring

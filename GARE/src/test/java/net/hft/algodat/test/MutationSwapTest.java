@@ -19,7 +19,7 @@ import net.hft.algodat.framework.geneticalgorithm.functions.Mutation;
 import net.hft.algodat.framework.geneticalgorithm.services.JobParser;
 import net.hft.algodat.framework.geneticalgorithm.services.ResourceService;
 import net.hft.algodat.framework.geneticalgorithm.utilities.Utilities;
-import net.hft.algodat.selectionmethods.MutationSwap;
+import net.hft.algodat.mutationmethods.MutationSwap;
 
 import org.junit.Test;
 
