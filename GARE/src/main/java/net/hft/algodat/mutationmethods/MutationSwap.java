@@ -1,4 +1,4 @@
-package net.hft.algodat.selectionmethods;
+package net.hft.algodat.mutationmethods;
 
 import java.util.ArrayList;
 import java.util.List;

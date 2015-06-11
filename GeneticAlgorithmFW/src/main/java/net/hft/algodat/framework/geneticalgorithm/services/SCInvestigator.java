@@ -33,7 +33,7 @@ public abstract class SCInvestigator {
 
     public static boolean isStopCriteraReached(GeneticAlgorithm instance) {
 
-        boolean isReached = true;
+        boolean isReached = false;
 
         int maxValueBorder = 0;
         int maxValueAtRuntime = 0;

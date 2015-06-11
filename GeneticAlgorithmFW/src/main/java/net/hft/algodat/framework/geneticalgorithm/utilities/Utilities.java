@@ -10,17 +10,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
-
 import net.hft.algodat.framework.geneticalgorithm.entities.Individual;
-
 import org.slf4j.LoggerFactory;
 
 /**
@@ -68,7 +64,7 @@ public abstract class Utilities {
     public static Individual getFittestInPopulation(List<Individual> population) {
         Individual best = population.get(0);
         for (Individual i : population) {
-            if (i.getFitness() >= best.getFitness()) {
+            if (i.getFitness() < best.getFitness()) {
                 best = i;
             }
         }

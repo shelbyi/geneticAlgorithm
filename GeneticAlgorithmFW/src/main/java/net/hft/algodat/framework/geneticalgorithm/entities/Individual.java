@@ -15,10 +15,11 @@ import net.hft.algodat.framework.geneticalgorithm.services.JobService;
  */
 public class Individual {
 
-    int[] jobListe;//genotype
+    public int[] jobListe;//genotype
     int[] schedule;//phänotype
     
     private List<Job> jobs;
+    private List<Resource> res;
 
     //example of the data structure:
     //jobListe: 1 3 6 2 4 5 7  ; that means, jobs should schedule by the order 1,3,...,7; the Jobs 1 and 7 are the dummy jobs
@@ -161,6 +162,10 @@ public class Individual {
     
     public List<Job> getJobs() {
     	return this.jobs;
+    }
+    
+    public List<Resource> getResources() {
+    	return this.res;
     }
 
     public int earliestPossibleStarttime(Job j, List<Job> jobs) {
